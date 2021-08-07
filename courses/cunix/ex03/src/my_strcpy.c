@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char *my_strcpy(char *dest, char *src) 
+char *my_strcpy(char *dest, const char *src) 
 {
     char *orig = dest;
     while ((*dest = *src) != '\0') 

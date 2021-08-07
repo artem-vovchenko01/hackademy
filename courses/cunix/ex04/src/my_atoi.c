@@ -1,4 +1,4 @@
-int my_atoi(char *str)
+int my_atoi(const char *str)
 {
     char ch;
     int count = 0, res = 0, digit;
