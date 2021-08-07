@@ -1,25 +1,25 @@
 int my_atoi(char *str)
 {
     char ch;
-    int count =0, res = 0, digit;
+    int count = 0, res = 0, digit;
     int sign = 1;
-    if ( (ch = *str) == '-')
+    if ((ch = *str) == '-')
     {
         str++;
         sign = -1;
     }
 
-    while ( (ch = *str) >= 48 && ch <= 57) 
+    while ((ch = *str) >= 48 && ch <= 57) 
     {
         str++;
         count++;
     }
     int power = 0;
-    while ( (power++) < count)
+    while ((power++) < count)
     {
         int multiple = 1;
         digit = *(--str) - 48;
-        for (int i=1; i<power; i++)
+        for (int i = 1; i < power; i++)
         {
             multiple *= 10;
         }

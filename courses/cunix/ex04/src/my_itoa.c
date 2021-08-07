@@ -10,12 +10,14 @@ char *my_itoa(int val)
         val *= -1;
         res[pos_res++] = '-';
     }
+
     do
     {
         temp[pos_temp++] = val % 10 + '0';
         val /= 10;
         count++;
-    } while (val > 0);
+    } 
+    while (val > 0);
 
     while (count-- > 0)
     {
