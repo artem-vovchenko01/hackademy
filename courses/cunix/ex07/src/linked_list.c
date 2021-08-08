@@ -13,7 +13,7 @@ node_t *list_create(void *data)
     {
         // error
     }
-    head -> data = &data;
+    head -> data = data;
     head -> next = NULL;
     return head;
 }
@@ -21,28 +21,30 @@ node_t *list_create(void *data)
 
 void list_destroy(node_t **head, void (*fp)(void *data))
 {
-    node_t *prev = *head;
-    node_t *next;
-    if ((next = prev -> next) == NULL)
+    node_t *nd = *head;
+    node_t *after;
+//    if ((next = prev -> next) == NULL)
+//    {
+//        (*fp) (prev -> data);
+//        free(prev);
+//        return;
+//    }
+    while (nd != NULL)
     {
-        // error
+        after = nd -> next;
+        (*fp)(nd -> data);
+        //free(prev++);
+        nd = after;
     }
-    while (next -> next != NULL)
-    {
-        (*fp)(prev -> data);
-        free(prev++);
-        next = next -> next;
-    }
-    free(next);
 }
 
 void list_push(node_t *head, void *data)
 {
     node_t *nd = head;
     while (nd -> next != NULL)
-        nd++;
+        nd = nd -> next;
     nd -> next = (node_t*) malloc(sizeof(node_t));
-    nd -> next -> data = &data;
+    nd -> next -> data = data;
     nd -> next -> next = NULL;
 }
 
@@ -61,25 +63,26 @@ void *list_pop(node_t **head)
     node_t *prev = hd;
     if (hd -> next == NULL)
     {
-    // error
+        void *res = hd -> data;
+        *head = NULL;
+        return res;
     }
 
-    while ((++hd) -> next != NULL)
-        prev++;
+    while ((hd = hd -> next) -> next != NULL)
+        prev = prev -> next;
     
     void *res = prev -> next -> data;
     prev -> next = NULL;
+    free(prev -> next);
     return res;
 }
 
 void *list_shift(node_t **head)
 {
-    if ((*head) -> next == NULL)
-    {
-        // error
-    }
     void *res = (*head) -> data;
-    (*head)++;
+    node_t *to_del = *head;
+    (*head) = (*head) -> next;
+    free(to_del);
     return res;
 }
 
@@ -105,8 +108,8 @@ void *list_remove(node_t **head, int pos)
         cur++;
     }
     prev -> next = nd -> next;
-    void *res = nd -> next -> data;
-    nd -> next = NULL;
+    void *res = nd -> data;
+    free(nd);
     return res;
 }
 
@@ -116,8 +119,8 @@ void list_print(node_t *head)
     node_t *nd = head;
     while (nd != NULL)
     {
-        printf(nd -> data);
-        nd++;
+        printf("%s\n", (char *) nd -> data);
+        nd = nd -> next;
     }
 }
 
@@ -127,7 +130,7 @@ void list_visitor(node_t *head, void (*fp)(void *data))
     while (hd != NULL)
     {
         (*fp)(hd -> data);
-        hd++;
+        hd = hd -> next;
     }
 }
 
