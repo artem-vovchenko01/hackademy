@@ -12,7 +12,7 @@ node_t *list_create(void *data)
     node_t *head = (node_t *) malloc(sizeof(node_t));
     if (head == NULL)
     {
-        // error
+        return head;
     }
     head -> data = data;
     head -> next = NULL;
@@ -28,7 +28,6 @@ void list_destroy(node_t **head, void (*fp)(void *data))
     {
         after = nd -> next;
         (*fp)(nd -> data);
-        //free(prev++);
         nd = after;
     }
 }
