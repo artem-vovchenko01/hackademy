@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
-	void *data;
+typedef struct node 
+{
+    void *data;
     struct node *next;
 } node_t;
 
@@ -23,12 +24,6 @@ void list_destroy(node_t **head, void (*fp)(void *data))
 {
     node_t *nd = *head;
     node_t *after;
-//    if ((next = prev -> next) == NULL)
-//    {
-//        (*fp) (prev -> data);
-//        free(prev);
-//        return;
-//    }
     while (nd != NULL)
     {
         after = nd -> next;
@@ -42,8 +37,10 @@ void list_push(node_t *head, void *data)
 {
     node_t *nd = head;
     while (nd -> next != NULL)
+    {
         nd = nd -> next;
-    nd -> next = (node_t*) malloc(sizeof(node_t));
+    }
+    nd -> next = (node_t *) malloc(sizeof(node_t));
     nd -> next -> data = data;
     nd -> next -> next = NULL;
 }
@@ -69,7 +66,9 @@ void *list_pop(node_t **head)
     }
 
     while ((hd = hd -> next) -> next != NULL)
+    {
         prev = prev -> next;
+    }
     
     void *res = prev -> next -> data;
     prev -> next = NULL;
@@ -89,19 +88,21 @@ void *list_shift(node_t **head)
 void *list_remove(node_t **head, int pos)
 {
     if (pos == 0)
+    {
         list_shift(head);
+    }
     node_t *prev = *head;
     node_t *nd;
     if ((nd = prev -> next) == NULL)
     {
-        // error
+        return NULL;
     }
     int cur = 1;
     while (cur != pos)
     {
         if (nd == NULL) 
         {
-            // error
+            return nd;
         }
         nd = nd -> next;
         prev = prev -> next;
