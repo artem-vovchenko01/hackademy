@@ -14,5 +14,6 @@ int ft_tolower(int c);
 
 int abs(int i);
 div_t div(int num, int denom);
+char *strstr(const char *haystack, const char *needle);
 
 size_t ft_strlen(const char *s);
