@@ -8,9 +8,10 @@ all: $(OBJS)
 	ar cr libft.a $(OBJS)
 
 %.o: %.c
+	style50 $<
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean: fclean
 
 fclean:
-	rm -rf *.o *.a
+	rm -rf *.o *.a *.out
