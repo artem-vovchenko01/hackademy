@@ -12,4 +12,7 @@ int ft_isascii(int c);
 int ft_toupper(int c);
 int ft_tolower(int c);
 
+int abs(int i);
+div_t div(int num, int denom);
+
 size_t ft_strlen(const char *s);
