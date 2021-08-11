@@ -14,6 +14,10 @@ int ft_tolower(int c);
 
 int abs(int i);
 div_t div(int num, int denom);
-char *strstr(const char *haystack, const char *needle);
+char *ft_strstr(const char *haystack, const char *needle);
+char *ft_strnstr(const char *big, const char *little, size_t len);
 
+// Utility functions
+
+int ft_str_match_exclude_null(const char *str, const char *sub);
 size_t ft_strlen(const char *s);

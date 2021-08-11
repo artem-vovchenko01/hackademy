@@ -1,6 +1,6 @@
 objects=$(wildcard *.c)
 CC = cc
-CFLAGS = -std=c99
+CFLAGS = -std=c99 -g
 
 OBJS=$(patsubst %.c,%.o,$(objects))
 
