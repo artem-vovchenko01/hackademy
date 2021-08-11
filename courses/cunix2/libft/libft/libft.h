@@ -21,6 +21,7 @@ char *ft_strnstr(const char *big, const char *little, size_t len);
 void *ft_memset(void *s, int c, size_t len);
 void *ft_memcpy(void *dest, const void *src, size_t n);
 void *ft_memccpy(void *dest, const void *src, int c, size_t n);
+void *ft_memmove(void *dest, const void *src, size_t n);
 
 // Utility functions
 
