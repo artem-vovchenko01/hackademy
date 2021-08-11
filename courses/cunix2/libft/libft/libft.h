@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 
+// Day 1
 void ft_bzero(void *s, size_t len);
 char *ft_strdup(const char *str);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -12,10 +13,12 @@ int ft_isascii(int c);
 int ft_toupper(int c);
 int ft_tolower(int c);
 
+// Day 2
 int abs(int i);
 div_t div(int num, int denom);
 char *ft_strstr(const char *haystack, const char *needle);
 char *ft_strnstr(const char *big, const char *little, size_t len);
+void *ft_memset(void *s, int c, size_t len);
 
 // Utility functions
 
