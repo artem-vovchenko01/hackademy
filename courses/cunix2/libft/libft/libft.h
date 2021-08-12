@@ -30,6 +30,7 @@ void ft_striter(char *str, void (*f)(char *));
 char *ft_strmap(const char *s, char (*f)(char));
 char *ft_strsub(const char *s, unsigned int start, size_t len);
 char *ft_strjoin(const char *s1, const char *s2);
+char *ft_strtrim(const char *s);
 
 // Utility functions
 
