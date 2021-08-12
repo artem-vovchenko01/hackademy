@@ -27,6 +27,7 @@ int ft_memcmp(const void *s1, const void *s2, size_t n);
 
 // Day 3
 void ft_striter(char *str, void (*f)(char *));
+char *ft_strmap(const char *s, char (*f)(char));
 
 // Utility functions
 
