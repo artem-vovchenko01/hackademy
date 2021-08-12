@@ -25,6 +25,9 @@ void *ft_memmove(void *dest, const void *src, size_t n);
 void *ft_memchr(const void *s, int c, size_t n);
 int ft_memcmp(const void *s1, const void *s2, size_t n);
 
+// Day 3
+void ft_striter(char *str, void (*f)(char *));
+
 // Utility functions
 
 int ft_str_match_exclude_null(const char *str, const char *sub);
