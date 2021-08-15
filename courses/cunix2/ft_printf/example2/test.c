@@ -21,5 +21,10 @@ int main()
     printf("%-5caa\n", 'x');
     ft_printf("%-5caa\n", 'x');
 
+    printf("{%2c}\n", 0);
+    ft_printf("{%2c}\n", 0);
+
+    printf("{%5s}\n", "\0\0\0");
+    ft_printf("{%5s}\n", "\0\0\0");
 }
 

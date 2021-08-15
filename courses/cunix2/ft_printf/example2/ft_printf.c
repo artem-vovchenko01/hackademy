@@ -1,9 +1,8 @@
 #include "libft.h"
 
-void print_buf(char *buf, int align)
+void print_buf(char *buf, int align, int len)
 {
     int pad = 0;
-    size_t len = my_strlen(buf);
     if (!buf)
         len = 6;
     if (align < 0)
@@ -36,6 +35,20 @@ void print_buf(char *buf, int align)
             write(1, "(null)", 6);
     }
 }
+void print_char(char ch, int align)
+{
+    char *str_buf = malloc(2 * sizeof(char));
+    str_buf[0] = ch;
+    str_buf[1] = '\0';
+    print_buf(str_buf, align, 1);
+}
+
+void print_str(char *str, int align)
+{
+    size_t len = my_strlen(str);
+    print_buf(str, align, len);
+}
+
 
 int ft_printf(char *format, ...)
 {
@@ -45,7 +58,6 @@ int ft_printf(char *format, ...)
     int format_mode = 0;
     int align_len = 0;
     int plus_found = 0, minus_found = 0, number_found = 0;
-    char *str_buf = NULL;
     while (*format)
     {
         if (format_mode)
@@ -59,18 +71,15 @@ int ft_printf(char *format, ...)
                 case 'd':
                 case 'i':
                     num = va_arg(list, int);
-                    print_buf(my_itoa(num), align_len);
+                    print_str(my_itoa(num), align_len);
                     align_len = format_mode = number_found = 0;
                     break;
                 case 's':
-                    print_buf(va_arg(list, char *), align_len);
+                    print_str(va_arg(list, char *), align_len);
                     align_len = format_mode = number_found = 0;
                     break;
                 case 'c':
-                    str_buf = malloc(2 * sizeof(char));
-                    str_buf[0] = va_arg(list, int);
-                    str_buf[1] = '\0';
-                    print_buf(str_buf, align_len);
+                    print_char(va_arg(list, int), align_len);
                     align_len = format_mode = number_found = 0;
                     break;
                 case '+':
