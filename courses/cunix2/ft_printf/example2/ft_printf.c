@@ -50,6 +50,23 @@ void print_str(char *str, int align)
     print_buf(str, align, len);
 }
 
+void pad_with_zeros(int num, int len)
+{
+    if (num < 0)
+    {
+        num *= -1;
+        write(1, "-", 1);
+        len--;
+    }
+    char *str = my_itoa(num, 10);
+    size_t str_len = my_strlen(str);
+    int pad = len - str_len;
+    if (pad < 0)
+        pad = 0;
+    while (pad--)
+        write(1, "0", 1);
+    write(1, str, str_len);
+}
 
 int ft_printf(char *format, ...)
 {
@@ -58,7 +75,8 @@ int ft_printf(char *format, ...)
     int num = 0;
     int format_mode = 0;
     int align_len = 0;
-    int plus_found = 0, minus_found = 0, number_found = 0, space_found = 0;
+    int plus_found = 0, minus_found = 0, number_found = 0, space_found = 0, zero_found = 0;
+    char *parsed = NULL;
     while (*format)
     {
         if (format_mode)
@@ -75,11 +93,17 @@ int ft_printf(char *format, ...)
                 case 'd':
                 case 'i':
                     num = va_arg(list, int);
+                    if (zero_found)
+                    {
+                        pad_with_zeros(num, align_len);
+                        break;
+                    }
                     if (space_found && num >= 0 && !align_len)
                         print_str(" ", 0);
                     if (plus_found && num >= 0)
                         print_str("+", 0);
-                    print_str(my_itoa(num), align_len);
+                    parsed = my_itoa(num, 10);
+                    print_str(parsed, align_len);
                     align_len = format_mode = number_found = 0;
                     break;
                 case 's':
@@ -106,6 +130,8 @@ int ft_printf(char *format, ...)
                     {
                         if (!number_found)
                         {
+                            if (*format == '0')
+                                zero_found = 1;
                             number_found = 1;
                             if (minus_found)
                             {

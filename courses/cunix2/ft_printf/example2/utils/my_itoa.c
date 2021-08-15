@@ -1,7 +1,7 @@
 #include <stdio.h>
-char *my_itoa(int val)
+char *my_itoa(int val, int base)
 {
-    char temp[20];
+    char temp[24];
     int pos_temp = 0, pos_res = 0;
     static char res[20];
     int count = 0;
@@ -13,8 +13,8 @@ char *my_itoa(int val)
 
     do
     {
-        temp[pos_temp++] = val % 10 + '0';
-        val /= 10;
+        temp[pos_temp++] = val % base + '0';
+        val /= base;
         count++;
     } 
     while (val > 0);
