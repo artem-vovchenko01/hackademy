@@ -3,7 +3,7 @@ int my_atoi(const char *str)
     char ch;
     int count = 0, res = 0, digit;
     int sign = 1;
-    if ((ch = *str) == '-')
+    if (*str == '-')
     {
         str++;
         sign = -1;

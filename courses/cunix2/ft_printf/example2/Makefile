@@ -13,6 +13,7 @@ all: $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
+	style50 $<
 
 clear:
 	$(RM) $(OBJS) $(NAME)

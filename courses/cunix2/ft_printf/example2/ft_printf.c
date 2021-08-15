@@ -4,17 +4,25 @@ void print_buf(char *buf, int align, int len)
 {
     int pad = 0;
     if (!buf)
+    {
         len = 6;
+    }
     if (align < 0)
     {
         align *= -1;
         if (buf)
+        {
             write(1, buf, len);
+        }
         else
+        {
             write(1, "(null)", 6);
+        }
         pad = align - len;
         if (pad < 0)
+        {
             pad = 0;
+        }
         while (pad--)
         {
             write(1, " ", 1);
@@ -24,15 +32,21 @@ void print_buf(char *buf, int align, int len)
     {
         pad = align - len;
         if (pad < 0)
+        {
             pad = 0;
+        }
         while (pad--)
         {
             write(1, " ", 1);
         }
         if (buf)
+        {
             write(1, buf, len);
+        }
         else
+        {
             write(1, "(null)", 6);
+        }
     }
 }
 void print_char(char ch, int align)
@@ -62,9 +76,13 @@ void pad_with_zeros(int num, int len)
     size_t str_len = my_strlen(str);
     int pad = len - str_len;
     if (pad < 0)
+    {
         pad = 0;
+    }
     while (pad--)
+    {
         write(1, "0", 1);
+    }
     write(1, str, str_len);
 }
 
@@ -99,9 +117,13 @@ int ft_printf(char *format, ...)
                         break;
                     }
                     if (space_found && num >= 0 && !align_len)
+                    {
                         print_str(" ", 0);
+                    }
                     if (plus_found && num >= 0)
+                    {
                         print_str("+", 0);
+                    }
                     parsed = my_itoa(num, 10);
                     print_str(parsed, align_len);
                     align_len = format_mode = number_found = 0;
@@ -131,7 +153,9 @@ int ft_printf(char *format, ...)
                         if (!number_found)
                         {
                             if (*format == '0')
+                            {
                                 zero_found = 1;
+                            }
                             number_found = 1;
                             if (minus_found)
                             {
