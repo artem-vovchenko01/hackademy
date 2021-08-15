@@ -4,6 +4,7 @@
 
 int main()
 {
+    ft_printf("%i\n", -1024);
     printf("%5%\n");
     ft_printf("%5%\n");
     printf("hello %s yes\n", "world");
@@ -26,5 +27,32 @@ int main()
 
     printf("{%5s}\n", "\0\0\0");
     ft_printf("{%5s}\n", "\0\0\0");
+
+    ft_printf("%i\n", -1024);
+    printf("% i\n", 1024);
+    printf("% i\n", -1024);
+    printf("% i\n", 102456);
+
+    printf("% i\n", 1);
+    printf("% i\n", -1);
+    printf("% 3i\n", 1);
+    printf("% 3i\n", -1);
+    printf("%3i\n", 1);
+    printf("%3i\n", -1);
+
+
+    ft_printf("% i\n", 1);
+    ft_printf("% i\n", -1);
+    ft_printf("% 3i\n", 1);
+    ft_printf("% 3i\n", -1);
+    ft_printf("%3i\n", 1);
+    ft_printf("%3i\n", -1);
+
+    printf("%+d\n", 1024);
+    printf("%+d\n", -1024);
+    printf("%+d\n", 0);
+    ft_printf("%+d\n", 1024);
+    ft_printf("%+d\n", -1024);
+    ft_printf("%+d\n", 0);
 }
 

@@ -41,6 +41,7 @@ void print_char(char ch, int align)
     str_buf[0] = ch;
     str_buf[1] = '\0';
     print_buf(str_buf, align, 1);
+    free(str_buf);
 }
 
 void print_str(char *str, int align)
@@ -57,7 +58,7 @@ int ft_printf(char *format, ...)
     int num = 0;
     int format_mode = 0;
     int align_len = 0;
-    int plus_found = 0, minus_found = 0, number_found = 0;
+    int plus_found = 0, minus_found = 0, number_found = 0, space_found = 0;
     while (*format)
     {
         if (format_mode)
@@ -68,9 +69,16 @@ int ft_printf(char *format, ...)
                     write(1, "%", 1);
                     format_mode = 0;
                     break;
+                case ' ':
+                    space_found = 1;
+                    break;
                 case 'd':
                 case 'i':
                     num = va_arg(list, int);
+                    if (space_found && num >= 0 && !align_len)
+                        print_str(" ", 0);
+                    if (plus_found && num >= 0)
+                        print_str("+", 0);
                     print_str(my_itoa(num), align_len);
                     align_len = format_mode = number_found = 0;
                     break;
