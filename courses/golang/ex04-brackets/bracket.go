@@ -1,7 +1,7 @@
 package brackets
 
 func Bracket(inp string) (bool, error) {
-	st := Stack { stack: make([]rune, 0) }
+	st := Stack{stack: make([]rune, 0)}
 	for _, v := range inp {
 		if v == '[' || v == '(' || v == '{' {
 			st.Push(v)

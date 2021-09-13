@@ -4,20 +4,20 @@ import (
 	"sync"
 )
 
-var wg = sync.WaitGroup {}
+var wg = sync.WaitGroup{}
 var mp = make(map[rune]int)
-var mtx = &sync.Mutex {}
+var mtx = &sync.Mutex{}
 
 func Frequency(str string) map[rune]int {
 	var mp = make(map[rune]int)
-	for _,v := range str {
+	for _, v := range str {
 		mp[v] = mp[v] + 1
 	}
 	return mp
 }
 
 func concurrentFrequencyPartial(str string) {
-	for _,v := range str {
+	for _, v := range str {
 		mtx.Lock()
 		mp[v] = mp[v] + 1
 		mtx.Unlock()
@@ -32,5 +32,5 @@ func ConcurrentFrequency(strs []string) map[rune]int {
 		go concurrentFrequencyPartial(v)
 	}
 	wg.Wait()
-	return mp	
+	return mp
 }

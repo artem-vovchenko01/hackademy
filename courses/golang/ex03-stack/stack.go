@@ -1,7 +1,7 @@
 package stack
 
 func New() *Stack {
-	return &Stack {
+	return &Stack{
 		stack: make([]int, 0),
 	}
 }
@@ -15,7 +15,7 @@ func (st *Stack) Push(val int) {
 }
 
 func (st *Stack) Pop() int {
-	ret := st.stack[len(st.stack) - 1]
-	st.stack = st.stack[:len(st.stack) - 1]
+	ret := st.stack[len(st.stack)-1]
+	st.stack = st.stack[:len(st.stack)-1]
 	return ret
 }
