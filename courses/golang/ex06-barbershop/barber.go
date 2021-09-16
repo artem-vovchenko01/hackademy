@@ -2,17 +2,17 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math/rand"
+	"time"
 )
 
 type Shop struct {
-	queue			SeatQueue
+	queue SeatQueue
 }
 
-type Barber struct {}
+type Barber struct{}
 
-var shop = Shop { queue: CreateSeats(15) }
+var shop = Shop{queue: CreateSeats(15)}
 
 func main() {
 	quit := make(chan struct{})
@@ -32,15 +32,15 @@ func main() {
 		customerChannel <- customer
 	}
 
-	<- quit
+	<-quit
 }
 
 func ensureAllServed(customerServed, quit chan struct{}, customers int) {
 	counter := 0
 	for {
-		<- customerServed
+		<-customerServed
 		counter++
-		if (counter == customers) {
+		if counter == customers {
 			break
 		}
 	}
@@ -51,18 +51,18 @@ func ensureAllServed(customerServed, quit chan struct{}, customers int) {
 func customer(customerChan chan int, cReady, quit, queueSync chan struct{}) {
 	for {
 		select {
-		case customer := <- customerChan:
+		case customer := <-customerChan:
 			fmt.Printf("Customer %d came, tries to find place in the queue\n", customer)
-			<- queueSync
+			<-queueSync
 			err := shop.queue.AddCustomer(customer)
 			queueSync <- struct{}{}
-			if (err != nil) {
+			if err != nil {
 				fmt.Printf("Queue is full, customer %d cannot come\n", customer)
 			} else {
 				fmt.Printf("Customer %d took a seet\n", customer)
 				cReady <- struct{}{}
 			}
-		case <- quit:
+		case <-quit:
 			break
 		}
 	}
@@ -70,27 +70,27 @@ func customer(customerChan chan int, cReady, quit, queueSync chan struct{}) {
 
 func barber(cReady, quit, queueSync, customerServed chan struct{}) {
 	for {
-	select {
-	case <- cReady:
-		<- queueSync
-		var customer, err = shop.queue.NextCustomer()
-		if err == nil {
-			fmt.Printf("Barber is serving customer %d\n", customer)
-			fmt.Printf("People in queue: %v\n", shop.queue.seats)
-			queueSync <- struct{}{}
-			randomDelay()
-			fmt.Printf("Done serving customer %d\n", customer)
-			customerServed <- struct{}{}
-		} else {
-			queueSync <- struct{}{}
-			fmt.Println("There is no customer to ask from the queue!")
+		select {
+		case <-cReady:
+			<-queueSync
+			var customer, err = shop.queue.NextCustomer()
+			if err == nil {
+				fmt.Printf("Barber is serving customer %d\n", customer)
+				fmt.Printf("People in queue: %v\n", shop.queue.seats)
+				queueSync <- struct{}{}
+				randomDelay()
+				fmt.Printf("Done serving customer %d\n", customer)
+				customerServed <- struct{}{}
+			} else {
+				queueSync <- struct{}{}
+				fmt.Println("There is no customer to ask from the queue!")
+			}
+
+		case <-quit:
+			quit <- struct{}{}
+			break
 		}
-	
-	case <- quit:
-		quit <- struct{}{}
-		break
 	}
-}
 }
 
 func randomDelay() {

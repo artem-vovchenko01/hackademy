@@ -6,18 +6,18 @@ import (
 
 type SeatQueue struct {
 	seats []int
-	cap 	int
+	cap   int
 }
 
 func CreateSeats(capacity int) SeatQueue {
-	return SeatQueue {
+	return SeatQueue{
 		seats: make([]int, 0),
-		cap: capacity,
+		cap:   capacity,
 	}
 }
 
 func (seatOrder *SeatQueue) AddCustomer(customer int) error {
-	if (len(seatOrder.seats) < seatOrder.cap) {
+	if len(seatOrder.seats) < seatOrder.cap {
 		seatOrder.seats = append([]int{customer}, seatOrder.seats...)
 		return nil
 	} else {
