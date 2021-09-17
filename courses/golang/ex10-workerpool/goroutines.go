@@ -1,14 +1,14 @@
 package goroutines
 
 import (
-	"os"
 	"bufio"
-	"time"
-	"strconv"
 	"fmt"
+	"os"
+	"os/signal"
+	"strconv"
 	"sync"
 	"syscall"
-	"os/signal"
+	"time"
 )
 
 var wg sync.WaitGroup = sync.WaitGroup{}
@@ -23,16 +23,16 @@ func Run(poolSize int) {
 	curWorker := 1
 	// go waitSeconds(10, done)
 	go readInput(input)
-	fromloop:
+fromloop:
 	for {
 		select {
-		case <- done:
+		case <-done:
 			break fromloop
-		case task := <- input:
+		case task := <-input:
 			if len(task) == 0 {
 				break
 			}
-			job, err := strconv.ParseFloat(task[:len(task) - 1], 64)
+			job, err := strconv.ParseFloat(task[:len(task)-1], 64)
 			if err != nil {
 				break
 			}
@@ -62,7 +62,7 @@ func waitSeconds(sec int, done chan struct{}) {
 	done <- struct{}{}
 }
 
-func worker(id int, jobs <- chan float64) {
+func worker(id int, jobs <-chan float64) {
 	for j := range jobs {
 		fmt.Printf("worker:%d sleep:%.1f\n", id, j)
 		time.Sleep(time.Duration(j) * time.Second)
@@ -73,7 +73,7 @@ func worker(id int, jobs <- chan float64) {
 }
 
 func trapSigTerm(done chan struct{}) {
-	c := make(chan os.Signal, 1) 
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	<-c
 	done <- struct{}{}
