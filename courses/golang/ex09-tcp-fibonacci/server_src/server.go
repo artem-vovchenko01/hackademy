@@ -1,14 +1,14 @@
 package main
 
 import (
-	"encoding/json"
-	"net"
 	"bufio"
+	"encoding/json"
 	"math/big"
+	"net"
 	"time"
 )
 
-func main(){
+func main() {
 	ln, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		panic(err)
@@ -17,7 +17,7 @@ func main(){
 
 	for {
 		conn, err := ln.Accept()
-		go func() { 
+		go func() {
 			defer conn.Close()
 			for {
 				if err != nil {
@@ -36,7 +36,7 @@ func getJsonToSend(str string) string {
 	json.Unmarshal([]byte(str), &mesg)
 	res := big.NewInt(int64(mesg["number"]))
 	now := time.Now()
-	bigNum, _ := BigInt { fibo(*res), }.MarshalJSON()
+	bigNum, _ := BigInt{fibo(*res)}.MarshalJSON()
 	spent := time.Since(now)
 	send["number"] = bigNum
 	send["time"] = []byte(spent.String())
@@ -58,9 +58,9 @@ func fibo(num big.Int) big.Int {
 }
 
 func (b BigInt) MarshalJSON() ([]byte, error) {
-    return []byte(b.String()), nil
+	return []byte(b.String()), nil
 }
 
 type BigInt struct {
-    big.Int
+	big.Int
 }
