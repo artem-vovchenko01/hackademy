@@ -4,19 +4,20 @@ import (
 	"container/heap"
 	"time"
 )
+
 type Orderbook struct {
-	bids *PriorityQueue
-	asks *PriorityQueue
+	bids      *PriorityQueue
+	asks      *PriorityQueue
 	completed []*Order
 }
 
 func New() *Orderbook {
 	var bid PriorityQueue = make(PriorityQueue, 0)
 	var ask PriorityQueue = make(PriorityQueue, 0)
-	return &Orderbook{ 
+	return &Orderbook{
 		bids: &bid,
 		asks: &ask,
-	 }
+	}
 }
 
 func (orderbook *Orderbook) Match(order *Order) ([]*Trade, *Order) {
@@ -32,14 +33,14 @@ func (orderbook *Orderbook) MatchAsk(order *Order) ([]*Trade, *Order) {
 	for {
 		if orderbook.bids.Len() == 0 {
 			if order.Kind == KindLimit {
-				item := &QueueItem {value: *order, timestamp: time.Now(), priority: (^uint64(0)) - order.Price}
+				item := &QueueItem{value: *order, timestamp: time.Now(), priority: (^uint64(0)) - order.Price}
 				heap.Push(orderbook.asks, item)
 			} else {
 				return trades, order
 			}
 			break
 		}
-		
+
 		highestBidQueueItem := heap.Pop(orderbook.bids)
 		highestBid := highestBidQueueItem.(*QueueItem).value
 		heap.Push(orderbook.bids, highestBidQueueItem)
@@ -53,7 +54,7 @@ func (orderbook *Orderbook) MatchAsk(order *Order) ([]*Trade, *Order) {
 				break
 			}
 		} else {
-			item := &QueueItem {value: *order, timestamp: time.Now(), priority: (^uint64(0)) - order.Price}
+			item := &QueueItem{value: *order, timestamp: time.Now(), priority: (^uint64(0)) - order.Price}
 			heap.Push(orderbook.asks, item)
 			break
 		}
@@ -108,9 +109,9 @@ func executeTrade(incoming *Order, resting *Order) *Trade {
 	incoming.Volume -= amount
 	resting.Volume -= amount
 	if incoming.Side == SideAsk {
-		return &Trade {Volume: amount, Price: resting.Price, Ask: incoming, Bid: resting }
+		return &Trade{Volume: amount, Price: resting.Price, Ask: incoming, Bid: resting}
 	} else {
-		return &Trade {Volume: amount, Price: resting.Price, Ask: resting, Bid: incoming }
+		return &Trade{Volume: amount, Price: resting.Price, Ask: resting, Bid: incoming}
 	}
 }
 

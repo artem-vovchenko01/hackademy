@@ -6,10 +6,10 @@ import (
 )
 
 type QueueItem struct {
-	value    Order
-	priority uint64
+	value     Order
+	priority  uint64
 	timestamp time.Time
-	index int
+	index     int
 }
 
 func (qi *QueueItem) String() string {
@@ -56,7 +56,7 @@ func (pq *PriorityQueue) CanFillAmount(requestedAmount uint64) bool {
 	if n == 0 {
 		return false
 	}
-	amount := uint64(0) 
+	amount := uint64(0)
 	for amount < requestedAmount {
 		if n == 0 {
 			return false
